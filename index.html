@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting HandBook</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+  </head>
+  <body>
+    <nav id="navbar">
+      <header>NGACS - HandBook</header>
+      <ul>
+        <li>
+          <a class="nav-link" href="#What_you_should_already_know">What you should already know</a>
+        </li>
+        <li><a class="nav-link" href="#soop">SOOP</a></li>
+        <li>
+          <a class="nav-link" href="#yield">Yield Issue</a>
+        </li>
+        <li>
+          <a class="nav-link" href="#feeder">Feeder Error</a>
+        </li>
+        <li><a class="nav-link" href="#xy">X/Y Axis Error</a></li>
+        <li><a class="nav-link" href="#rz">R/Z Axis Error</a></li>
+        <li>
+          <a class="nav-link" href="#vision">Vision Error</a>
+        </li>
+        <li><a class="nav-link" href="#vacuum">Vacuum Error</a></li>
+        <li><a class="nav-link" href="#ofa">OFA Error</a></li>
+        <li><a class="nav-link" href="#software">Sofware Error</a></li>
+        <li><a class="nav-link" href="#connection">Connection Error</a></li>
+        <li>
+          <a class="nav-link" href="#breakdown">Machine Concept Breakdown</a>
+        </li>
+        <li><a class="nav-link" href="#bkm">BKM - Best Knowledge Methods</a></li>
+        <li>
+          <a class="nav-link" href="#a3">A3 Problem Solving</a>
+        </li>
+        <li><a class="nav-link" href="#Reference">Reference</a></li>
+      </ul>
+    </nav>
+    <main id="main-doc" class="container">
+      <section class="main-section" id="What_you_should_already_know">
+        <header>What you should already know</header>
+        <article>
+          <p>This guide assumes you have the following basic background:</p>
+
+          <ul>
+            <li>
+              Strictly perform step-by-step NGACS Function Calibration (Setup & Run).
+            </li>
+            <li>Good adjusting skill with Mechanical Component.</li>
+            <li>
+              Required at least L2 ACS Training.
+            </li>
+          </ul>
+          <br>
+        </article>
+      </section>
+
+      <section class="main-section" id="soop">
+        <header>Substrate out of Pocket</header>
+        <article>
+          <p>
+            SOOP is the chronic ERROR at tool NGACS - MHS main tool. It
+            is a frequent and common error. Furthermore, impact does not only at MHS module (MA, AU, APRT,... ) , SOOP can be connected to the QUALITY ISSUE of
+            our down stream: BAM & CAM Module.
+          </p>
+
+          <p>
+            SOOP contains many factor, such as Mechanical, Sofware,
+            and Material, and a core factor of this ERROR come from MECHANICAL such as Bond Head, Voice Coil,
+            SOOP Laser, and Conveyor. This core factor divide SOOP into 3 type of ERROR (the other factors will not discuss in this chapter)
+          </p>
+          <ul>
+            <li>
+              <a href="#realoop">Real - SOOP</a>: Actually, substrate out of pocket & detected by SOOP Laser measurement.
+            </li>
+            <li>
+              <a href="#fakeoop">Fake - SOOP</a>: SOOP Laser measurement incorrect lead to wrong trigger.
+            </li>
+            <li>
+              <a href="#escape">Escape - SOOP</a>: Subtrate out of pocket & SOOP Laser measurement incorrect lead to escape.
+            </li>
+          </ul>
+          <br>
+          <p>
+            <strong id="realoop">REAL - SOOP</strong><br>
+            <ol>
+              <li>
+                <u>Pick and Place System</u> <br>
+                - Loosening Bond Head's attached screw: <em>Tighten by cap-head-hex 3mm/2Nm Torque.</em> <br>
+                <code>
+                  There are 4 screws of each Bond Head
+                </code>
+                - Instability of Down Looking Camera/ DLC is not perpendicular: <em>Replace Bond Head.</em> <br>
+                <code>
+                  Validation:
+                  1. Open teach window under [Configuration][Module Data][Parameter...]
+                  2. Select Station [Pick and Place System 1(2)], Group [General], Tab [Offsets]
+                  3. Select line [Zero position], [Drive to position] X/Y axis
+                  4. Open [Tools], click [Activate Down Looking Camera]
+                  5. Activate "Live mode" on Vision PC for the down looking camera
+                  6. Move the Z axis up/down via teach panel to validate movement of camera
+                     a. Instability
+                     b. Not perpendicular
+                </code>
+                - Loosening Down Looking Camera: <em> Replace Bond Head. </em> <br>
+                <code>
+                  Validation:
+                  1. Open teach window under [Configuration][Module Data][Parameter...]
+                  2. Select Station [Pick and Place System 1(2)], Group [General], Tab [Offsets]
+                  3. Select line [Zero position], [Drive to position] X/Y axis and Down Looking Camera Z Axis
+                  4. Activate "Live mode" on Vision PC for the down looking camera
+                  5. Capture current image of down looking camera
+                  6. Clear all processing carrier in conveyor
+                  7. Select Station [Pick and Place System 1(2)], Function [Automatic Cycle Lane 1(2)]
+                  8. Insert empty carrier to corresponding conveyor module.
+                  9. Press [Start Function]
+                  10. After 30 cycle, compare image at [Zero position] and captured image (step 5.) to verify accuracy of DLC
+                </code>
+                - Failure Accuracy Criteria: <em>Perform required Calibration.</em> <br>
+                <code>
+                  *Vision Calibration: Vision components are calibrated to each other. Consists of
+                      a. Down-looking camera resolution Calibration
+                         Needed if down-looking camera Z Axis has changed.
+                      b. Up-looking camera resolution Calibration
+                         Needed if up-looking camera Z Axis has changed.
+                      c. Up-looking camera angle Calibration
+                         Needed if Angle of up-looking camera has changed.
+
+                      This function is required strictly follow 3 steps (details in L2 Training documentation):
+                         SETUP CALIBRATION PLATE POSITION
+                         SETUP DLC CAMERA CALIBRATION OF RESOLUTION
+                         RUN VISION CALIBRATION
+
+                  *Auto Calibration: Automatically compensate the placement offset of the individual placement head
+                      a. Must be perform once per 4 shift (due to temperature fluctuation)
+                         Verify calibration file in D:\Data\
+                      b. Must be run after Vision Calibration
+                         cause [nozzle centered above up looking camera] has changed in step SETUP CALIBRATION PLATE POSITION
+
+                  *CoG Calibration: Pending...
+                  *Error Mapping: Pending...
+                </code>
+              </li>
+              <li>
+                <u>Conveyor System</u><br>
+                - Lifter Plate unable to open/close e-spring: <em>Adjust air pressure valve of Lifter plate</em>
+                <code>
+                  Tighten then release 5 round.
+                </code>
+                - Product support not fully push up: <em>Adjust air pressure valve of Product support</em>
+                <code>
+                  5 Bar.
+                  *Rarely happend: mostly tool will trigger error.
+                                   (Clamp not in upper/lower, Product support not in upper/lower)
+                </code>
+                - SOOP when open/close e-spring: <em>Adjust stopper upper/lower of Conveyor Clamping</em>
+                <code>
+                  a. Push EMO
+                  b. Pending...
+                </code>
+              </li>
+            </ol>
+          </p>
+          <p>
+            <strong id="fakeoop">FAKE - SOOP</strong><br>
+            <ol>
+              <li>
+                <u id="deviation">SOOP Laser sensor</u> <br>
+                - <span>Deviation of Laser Beam</span>: <em>Perform Laser Calibration.</em>
+                <code>
+                  SETUP OFFSET CAMERA TO LASER SENSOR
+                    Setup with T-jig instead of machine zero point for minimized offset to other factors such as:
+                    Base level, Planarity of Conveyor system, Parallelism of Conveyor-Axis system,...
+                    1. Remove nozzles both pick heads.
+                    2. Turn off Bond Head power. (Remove Fuse F14-P&P1 or F15-P&P2)
+                    3. Attach T-jig screws to corresponding pick heads.
+                       *Make sure:
+                         T-jig is not loosen.
+                         T-jig on conveyor plane.
+                    4. Turn off CB. Attach By-pass key to rear interlock.
+                    5. Mechanically adjust the alignment of the laser sensor to T-jig's laser hole.
+                       *Bracket type 1:
+                       *Bracket type 2:
+                    6. Press [Release Cover] in HMI station.
+                       Remove By-pass key.
+                       Remove T-jig.
+                       Turn on CB & Bond Head. (Insert Fuse)
+
+                  RUN LASER SENSOR CALIBRATION
+
+                  Validation:
+                    1. Open teach window under [Configuration][Module Data][Parameter...]
+                    2. Select Station [Pick and Place System 1(2)], Group [General], Tab [Offsets]
+                    3. Select line [Offset camera to laser spot]:
+                       X/Y Axis should be (0;-37) +/- 0.05mm
+                       If not, repeat SETUP & RUN LASER SENSOR CALIBRATION.
+                </code>
+                - Loosening of Laser sensor's Bracket: <em>Replace new Bracket.</em>
+                <code>
+                  Pending...
+                </code>
+                - Laser accuracy: <em>Replace new Laser sensor.</em>
+                <code>
+                  Pending...
+                </code>
+              </li>
+              <li>
+                <u>Process Carrier is not centered Support Station</u> <br>
+                - Fiducial of carrier cannot trigger conveyor's sensor (only for vertical sensor):<br>
+                  <em>Teaching amplifier of conveyor's sensor</em>
+                  <code>
+                  Verify setting of sensor sensitivity and response time. (Recommend: Turbo - 0s)
+                  Press "set button", manual carrier to position where Fiducial above sensor.
+                  Press "set button" again to define threshold trigger of sensor.
+                  (Move carrier forward/backward, amplifier's value will increase then decrease & re-increase.
+                   The lowest value after before re-increase is value of fiducial position.)
+                  </code>
+                - Distance between sensor and process position: <em>Adjust paramter </em>
+                  <code>
+                  Reset the values to "0"
+                  Manual carrier centered Support Station, marking 2 point in conveyor rail.
+                  Observe position of process carrier key-in value.
+                  </code>
+                - Loosening Conveyor Belt: <em>Tension belt or Replace belt</em> <br>
+                  <code>
+                  Refer section "Adjust Conveyor tension" in L2 Training Document to measurement & tension.
+                  </code>
+                - Carrier re-position to Conveyor Relation pont: <em>Teaching Conveyor Relation Point</em>
+                  <code>
+                  This parameter should be defined when setup machine & no changes are necessary.
+                  </code>
+                - Carrier is blocked during position: <em>Align product support position.</em>
+                  <code>
+                  Pending...
+                  </code>
+              </li>
+              <li>
+                <u>The Conveyor system</u> <br>
+                - Offset of Process area planarity over 0.2mm: <em>L3 Documentation.</em> <br>
+                - Offset of Process support planarity over 0.2mm: <em>L3 Documentation.</em> <br>
+                - Planarity of conveyor system in respect to X/Y Axis system out of tolerance (304.5mm +/-0.3mm): <em>L3 Documentation.</em><br>
+                - Parallelism of Conveyor-Axis system (Maximum offset of straightedge over 0.05mm): <em>L3 Documentation.</em>
+              </li>
+            </ol>
+          </p>
+          <p>
+            <strong id="escape">ESCAPE - SOOP</strong><br>
+            Basically, It's combination of 2 ERROR Fake & Real SOOP.
+            <code>
+              Pending...
+              (Base on experiment, most of case come from <a href="#deviation">Deviation of Laser Beam</a>)
+            </code>
+          </p>
+        </article>
+      </section>
+
+      <section class="main-section" id="yield">
+        <header>Yield Issues</header>
+        <article>
+        </article>
+      </section>
+      <section class="main-section" id="feeder">
+        <header>Feeder Errors</header>
+        <article>
+        </article>
+      </section>
+      <section class="main-section" id="xy">
+        <header>X/Y Axis Errors</header>
+        <article>
+        </article>
+      </section>
+      <section class="main-section" id="rz">
+        <header>R/Z Axis Errors</header>
+        <article>
+        </article>
+      </section>
+      <section class="main-section" id="vision">
+        <header>Vision Errors</header>
+        <article>
+        </article>
+      </section>
+      <section class="main-section" id="vacuum">
+        <header>Vacuum Errors</header>
+        <article>
+        </article>
+      </section>
+      <section class="main-section" id="ofa">
+        <header>OFA Errors</header>
+        <article>
+        </article>
+      </section>
+      <section class="main-section" id="software">
+        <header>Software Errors</header>
+        <article>
+        </article>
+      </section>
+      <section class="main-section" id="connection">
+        <header>Connection Error</header>
+        <article>
+        </article>
+      </section>
+      <section class="main-section" id="breakdown">
+        <header>Machine Concept Breakdown</header>
+        <article>
+        </article>
+      </section>
+      <section class="main-section" id="bkm">
+        <header>BKM - Best Knowledge Methods</header>
+        <article>
+        </article>
+      </section>
+      <section class="main-section" id="a3">
+        <header>A3 Problem Solving</header>
+        <article>
+        </article>
+      </section>
+      <section class="main-section" id="reference">
+        <header>Reference</header>
+        <article>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
