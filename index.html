@@ -90,11 +90,11 @@
             <ol>
               <li>
                 <u>Pick and Place System</u> <br>
-                - Loosening Bond Head's attached screw: <em>Tighten by cap-head-hex 3mm/2Nm Torque.</em> <br>
+                - Loosening Bond Head's attached screw: <em>Tighten by cap-head-hex 3mm/2Nm Torque.</em>
                 <code>
                   There are 4 screws of each Bond Head
                 </code>
-                - Instability of Down Looking Camera/ DLC is not perpendicular: <em>Replace Bond Head.</em> <br>
+                - Instability of Down Looking Camera: <em>Replace Bond Head.</em>
                 <code>
                   Validation:
                   1. Open teach window under [Configuration][Module Data][Parameter...]
@@ -103,10 +103,14 @@
                   4. Open [Tools], click [Activate Down Looking Camera]
                   5. Activate "Live mode" on Vision PC for the down looking camera
                   6. Move the Z axis up/down via teach panel to validate movement of camera
-                     a. Instability
-                     b. Not perpendicular
+                     Verify status of DLC during movement:
+                     (<em>place your click in center of picture to see example of instability</em>)
+                        <div class="window">
+                          <div class="title"><strong>Live on Sys 1 DL</strong></div>
+                          <div id="instability" class="dlc"></div>
+                        </div>
                 </code>
-                - Loosening Down Looking Camera: <em> Replace Bond Head. </em> <br>
+                - Loosening Down Looking Camera: <em> Replace Bond Head. </em>
                 <code>
                   Validation:
                   1. Open teach window under [Configuration][Module Data][Parameter...]
@@ -119,16 +123,34 @@
                   8. Insert empty carrier to corresponding conveyor module.
                   9. Press [Start Function]
                   10. After 30 cycle, compare image at [Zero position] and captured image (step 5.) to verify accuracy of DLC
+                  <table>
+                    <tr>
+                      <td>
+                        Captured Image:
+                        <div class="window">
+                          <div class="title"><strong>Sys 1 DL</strong></div>
+                          <div class="dlc"></div>
+                        </div>
+                      </td>
+                      <td>
+                        After 30 cycle Image:
+                        <div class="window">
+                          <div class="title"><strong>Live on Sys 1 DL</strong></div>
+                          <div id="deviation" class="dlc"></div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
                 </code>
-                - Failure Accuracy Criteria: <em>Perform required Calibration.</em> <br>
+                - Failure Accuracy Criteria: <em>Perform required Calibration.</em>
                 <code>
                   *Vision Calibration: Vision components are calibrated to each other. Consists of
                       a. Down-looking camera resolution Calibration
-                         Needed if down-looking camera Z Axis has changed.
+                         Needed if down-looking camera Z Axis has changed. (Physical or Parameter)
                       b. Up-looking camera resolution Calibration
-                         Needed if up-looking camera Z Axis has changed.
+                         Needed if up-looking camera Z Axis has changed. (Physical)
                       c. Up-looking camera angle Calibration
-                         Needed if Angle of up-looking camera has changed.
+                         Needed if Angle of up-looking camera has changed. (Physical)
 
                       This function is required strictly follow 3 steps (details in L2 Training documentation):
                          SETUP CALIBRATION PLATE POSITION
@@ -170,7 +192,7 @@
             <ol>
               <li>
                 <u id="deviation">SOOP Laser sensor</u> <br>
-                - <span>Deviation of Laser Beam</span>: <em>Perform Laser Calibration.</em>
+                - Deviation of Laser Beam: <em>Perform Laser Calibration.</em>
                 <code>
                   SETUP OFFSET CAMERA TO LASER SENSOR
                     Setup with T-jig instead of machine zero point for minimized offset to other factors such as:
